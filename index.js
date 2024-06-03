@@ -10,7 +10,7 @@ import { UserController, AdController } from "./controllers/index.js";
 import checkAuth from "./utils/checkAuth.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 
-mongoose.connect("mongodb+srv://viji:viji@cluster0.ib9j0cw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://viji:mom@cluster0.ib9j0cw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => console.log('DB Connected'))
     .catch((error) => console.log('Error', error))
 

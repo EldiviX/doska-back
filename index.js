@@ -11,13 +11,13 @@ import checkAuth from "./utils/checkAuth.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 import { ServerApiVersion } from 'mongodb';
 
-// mongoose.connect("mongodb+srv://viji:mom@cluster0.ib9j0cw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
-//     serverApi: {
-//       version: ServerApiVersion.v1,
-//       strict: true,
-//       deprecationErrors: true,
-//     }
-//   })
+mongoose.connect("mongodb+srv://viji:mom@cluster0.ib9j0cw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  })
     .then(() => console.log('DB Connected'))
     .catch((error) => console.log('Error', error))
 

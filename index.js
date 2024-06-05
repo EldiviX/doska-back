@@ -42,7 +42,10 @@ app.post('/login', loginValidation, handleValidationErrors, UserController.login
 app.post('/register', registerValidation, handleValidationErrors, UserController.register);
 app.get('/me', checkAuth, UserController.getMe);
 
-app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+app.post('/upload', (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://5.35.95.133');
+    next();
+}, checkAuth, upload.single('image'), (req, res) => {
     res.json({
         url: `/uploads/${req.file.originalname}`
     });

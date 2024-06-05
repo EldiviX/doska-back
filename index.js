@@ -34,35 +34,25 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const allowCors = (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://5.35.95.133');
-    res.setHeader('Access-Control-Allow-Headers', 'content-type');
-    next();
-};
-
 app.use(express.json());
 app.use(cors());
-app.use(allowCors);
 app.use('/uploads', express.static('uploads'));
 
-app.post('/login', allowCors, loginValidation, handleValidationErrors, UserController.login);
-app.post('/register', allowCors, registerValidation, handleValidationErrors, UserController.register);
-app.get('/me', allowCors, checkAuth, UserController.getMe);
+app.post('/login', loginValidation, handleValidationErrors, UserController.login);
+app.post('/register', registerValidation, handleValidationErrors, UserController.register);
+app.get('/me', checkAuth, UserController.getMe);
 
-app.post('/upload', (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://5.35.95.133');
-    next();
-}, checkAuth, upload.single('image'), (req, res) => {
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
     res.json({
         url: `/uploads/${req.file.originalname}`
     });
 });
 
-app.get('/ads', allowCors, AdController.getAll);
-app.get('/ads/:id', allowCors, AdController.getOne);
-app.post('/ads', allowCors, checkAuth, adCreateValidation, handleValidationErrors, AdController.create);
-app.delete('/ads/:id', allowCors, AdController.remove);
-app.patch('/ads/:id', allowCors, adCreateValidation, handleValidationErrors, AdController.update);
+app.get('/ads', AdController.getAll);
+app.get('/ads/:id', AdController.getOne);
+app.post('/ads', checkAuth, adCreateValidation, handleValidationErrors, AdController.create);
+app.delete('/ads/:id', AdController.remove);
+app.patch('/ads/:id', adCreateValidation, handleValidationErrors, AdController.update);
 
 app.listen(4444, (err) => {
     if (err) {

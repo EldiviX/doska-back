@@ -36,30 +36,22 @@ const upload = multer({ storage });
 
 app.use(express.json());
 app.use(cors());
+
+app.all('*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'URLs to trust of allow');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    if ('OPTIONS' == req.method) {
+    res.sendStatus(200);
+    } else {
+      next();
+    }
+  });
+
 app.use('/uploads', express.static('uploads'));
 
-app.post('/login', loginValidation, handleValidationErrors, (req, res) => {
-    // Вызов контроллера для выполнения логики входа
-    UserController.login(req, res);
-
-    // Установка заголовков CORS
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-});
-
-app.post('/register', registerValidation, handleValidationErrors, (req, res) => {
-    // Вызов контроллера для выполнения логики регистрации
-    UserController.register(req, res);
-
-    // Установка заголовков CORS
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-});
-
+app.post('/login', loginValidation, handleValidationErrors, UserController.login);
+app.post('/register', registerValidation, handleValidationErrors, UserController.register);
 
 app.get('/me', checkAuth, UserController.getMe);
 

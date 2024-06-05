@@ -36,11 +36,17 @@ const upload = multer({ storage });
 
 app.use(express.json());
 app.use(cors());
-app.options('*', cors());
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://5.35.95.133');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 
 app.use('/uploads', express.static('uploads'));
 
-app.post('/login', cors(), loginValidation, handleValidationErrors, UserController.login);
+app.post('/login', loginValidation, handleValidationErrors, UserController.login);
 app.post('/register', registerValidation, handleValidationErrors, UserController.register);
 
 app.get('/me', checkAuth, UserController.getMe);

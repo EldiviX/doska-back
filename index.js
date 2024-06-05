@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import multer from 'multer';
-const cors = require('cors');
+import cors from 'cors'
 
 import { registerValidation, loginValidation, adCreateValidation } from './validations.js';
 

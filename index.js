@@ -38,6 +38,7 @@ app.use(express.json());
 app.use(cors());
 
 app.all('*', function(req, res, next) {
+    console.log('dasdasda');
     res.header('Access-Control-Allow-Origin', 'URLs to trust of allow');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');

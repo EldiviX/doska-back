@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import multer from 'multer';
-import cors from 'cors';
+const cors = require('cors');
 
 import { registerValidation, loginValidation, adCreateValidation } from './validations.js';
 
@@ -34,15 +34,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.use(express.json());
 app.use(cors());
-
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://5.35.95.133');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
+app.use(express.json());
 
 app.use('/uploads', express.static('uploads'));
 

@@ -41,7 +41,7 @@ app.use('/uploads', express.static('uploads'));
 
 app.post('/login', loginValidation, handleValidationErrors, (req, res) => {
     // Логика обработки запроса
-
+    console.log('dasdasdas');
     // Установка заголовков CORS
     res.header('Access-Control-Allow-Origin', 'URLs to trust of allow');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');

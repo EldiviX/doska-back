@@ -2,6 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import multer from 'multer';
 import cors from 'cors'
+import https from "https";
+import fs from "fs";
 
 import { registerValidation, loginValidation, adCreateValidation } from './validations.js';
 
@@ -63,10 +65,24 @@ app.post('/ads', checkAuth, adCreateValidation, handleValidationErrors, AdContro
 app.delete('/ads/:id', AdController.remove);
 app.patch('/ads/:id', adCreateValidation, handleValidationErrors, AdController.update);
 
-app.listen( (err) => {
-    if (err) {
-        return console.log(err)
-    }
-    console.log('Server OK')
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/doska-ads.ru/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/doska-ads.ru/fullchain.pem', 'utf8');
+
+const httpsOptions = {
+    key: privateKey,
+    cert: certificate
+};
+
+const server = https.createServer(httpsOptions, app);
+
+server.listen(443, () => {
+    console.log('Server is running on port 443');
 });
+
+// app.listen(4444, (err) => {
+//     if (err) {
+//         return console.log(err)
+//     }
+//     console.log('Server OK')
+// });
 

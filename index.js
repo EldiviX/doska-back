@@ -63,7 +63,7 @@ app.post('/ads', checkAuth, adCreateValidation, handleValidationErrors, AdContro
 app.delete('/ads/:id', AdController.remove);
 app.patch('/ads/:id', adCreateValidation, handleValidationErrors, AdController.update);
 
-app.listen(4444, (err) => {
+app.listen( (err) => {
     if (err) {
         return console.log(err)
     }
